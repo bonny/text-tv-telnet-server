@@ -9,7 +9,7 @@ Text TV utan webbläsare -- äntligen är det möjligt!
 
 Öppna din terminal och skriv
 
-    `telnet telnet.texttv.nu`
+    telnet telnet.texttv.nu
 
 ## Såhär ser det ut va
 
