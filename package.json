@@ -1,0 +1,17 @@
+{
+    "name": "texttv_telnet",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "start": "node index.js",
+        "watch": "nodemon index.js"
+    },
+    "dependencies": {
+        "blessed": "^0.1.81",
+        "request": "^2.79.0",
+        "telnet": "^0.0.1",
+        "telnet2": "^0.0.1"
+    },
+    "devDependencies": {}
+}
