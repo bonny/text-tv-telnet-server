@@ -1,8 +1,10 @@
 var blessed = require('blessed');
 var telnet = require('telnet2');
 var request = require('request');
+var striptags = require('striptags');
 
 let cmd = []
+let screen = null;
 
 telnet({ tty: true }, function(client) {
   client.on('term', function(terminal) {
@@ -37,7 +39,7 @@ telnet({ tty: true }, function(client) {
 
   })
 
-  var screen = blessed.screen({
+  screen = blessed.screen({
     smartCSR: true,
     input: client,
     output: client,
@@ -79,8 +81,8 @@ telnet({ tty: true }, function(client) {
  */
 function checkCommand (cmd) {
 
-  console.log(`check if ${cmd} is valid command`)
   var pageNumber = parseInt(cmd, 10);
+
   if (isNaN(pageNumber)) {
     return false;
   }
@@ -91,6 +93,22 @@ function checkCommand (cmd) {
 
   // ok, valid number
   // http://api.texttv.nu/api/get/100?app=apiexempelsidan
+  let apiUrl = `http://api.texttv.nu/api/get/${pageNumber}?app=telnetserver`
 
+  request(apiUrl, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      let pagedata = JSON.parse(body)
+      renderPage(pagedata)
+    }
+  })
 
+}
+
+function renderPage(pagedata) {
+  let firstPage = pagedata[0];
+  let firstPageFirstContent = pagedata[0].content[0];
+  firstPageFirstContent = striptags(firstPageFirstContent);
+
+  screen.data.main.setContent(`${firstPageFirstContent}`);
+  screen.render();
 }
