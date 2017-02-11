@@ -3,6 +3,8 @@ var telnet = require('telnet2');
 var request = require('request');
 var striptags = require('striptags');
 
+var port = process.env.PORT || 2300;
+
 let cmd = []
 let screen = null;
 
@@ -74,7 +76,7 @@ telnet({ tty: true }, function(client) {
   });
 
   screen.render();
-}).listen(2300);
+}).listen(port);
 
 /**
  * cmd = string
