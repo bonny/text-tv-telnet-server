@@ -6,7 +6,7 @@ Med hjälp av denna fina teknik kan du visa texttv-sidor i din terminal.
 Text TV utan webbläsare -- äntligen är det möjligt!
 
 Projektet gjordes av [@eskapism](https://twitter.com/eskpism) som en del av [Svenska Stupid Hackathon](https://www.stupidhackathon.se/) som gick
-av stapeln 11 februari 2016 hos webbyrån [Earth People](https://earthpeople.se)
+av stapeln 11 februari 2016 hos webbyrån [Earth People](https://earthpeople.se).
 
 ## Såhär gör du va
 
