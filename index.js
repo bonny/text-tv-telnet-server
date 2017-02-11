@@ -25,7 +25,7 @@ telnet({ tty: true }, function(client) {
   // listen for the actual data from the client
   client.on('data', function (b) {
 
-      console.log('got data', b)
+      // console.log('got data', b)
       //client.write("b: " + b)
       // if enter/carriage return then check for command
       if (b == "\r") {
@@ -75,10 +75,10 @@ telnet({ tty: true }, function(client) {
     width: '80%',
     height: '90%',
     border: 'line',
-    content: 'Välkommen till Text TV:s Telnet-server'
+    content: 'Välkommen till Text TV:s Telnet-server\n\nAnge nummer på sida att visa: '
   });
 
-  console.log('will render welcome text')
+  //console.log('will render welcome text')
   screen.render();
 }).listen(port);
 
