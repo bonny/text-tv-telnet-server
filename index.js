@@ -5,6 +5,8 @@ var striptags = require('striptags');
 
 var port = process.env.PORT || 2300;
 
+console.log('will listen on port ' + port)
+
 let cmd = []
 let screen = null;
 
