@@ -7,10 +7,11 @@ var port = process.env.PORT || 2300;
 
 console.log('will listen on port ' + port)
 
-let cmd = []
-let screen = null;
-
 telnet({ tty: true }, function(client) {
+
+  let cmd = []
+  let screen = null;
+
   client.on('term', function(terminal) {
     screen.terminal = terminal;
     screen.render();
@@ -30,10 +31,10 @@ telnet({ tty: true }, function(client) {
       // if enter/carriage return then check for command
       if (b == "\r") {
         let fullCommand = cmd.join('')
-        console.log(fullCommand)
+        // console.log(fullCommand)
         screen.data.main.setContent(`Hämtar ${fullCommand} ...`);
         screen.render();
-        checkCommand(fullCommand)
+        checkCommand(fullCommand, screen)
         cmd = []
       } else {
         cmd.push(b)
@@ -85,7 +86,7 @@ telnet({ tty: true }, function(client) {
 /**
  * cmd = string
  */
-function checkCommand (cmd) {
+function checkCommand (cmd, screen) {
 
   var pageNumber = parseInt(cmd, 10);
 
@@ -104,13 +105,13 @@ function checkCommand (cmd) {
   request(apiUrl, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       let pagedata = JSON.parse(body)
-      renderPage(pagedata)
+      renderPage(pagedata, screen)
     }
   })
 
 }
 
-function renderPage(pagedata) {
+function renderPage(pagedata, screen) {
   let firstPage = pagedata[0];
   let firstPageFirstContent = pagedata[0].content[0];
   firstPageFirstContent = striptags(firstPageFirstContent);
