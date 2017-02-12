@@ -34,7 +34,10 @@ telnet({ tty: true }, function(client) {
         // console.log(fullCommand)
         screen.data.main.setContent(`Hämtar ${fullCommand} ...`);
         screen.render();
-        checkCommand(fullCommand, screen)
+        if (!checkCommand(fullCommand, screen)) {
+          screen.data.main.setContent(`Hämtar ${fullCommand} ...\nInte giltigt sidnummer! Försök med ett nytt sidnummer.`);
+          screen.render();
+        }
         cmd = []
       } else {
         cmd.push(b)
@@ -76,12 +79,33 @@ telnet({ tty: true }, function(client) {
     width: '80%',
     height: '90%',
     border: 'line',
-    content: 'Välkommen till Text TV:s Telnet-server\n\nAnge nummer på sida att visa: '
+    content: `
+Välkommen till Text TV:s Telnet-server!
+
+Denna tjänst gjordes som del av svenska Stupid Hackathon 2017.
+Mer info: twitter.com/stupidhack_sv
+
+Ange nummer på sida att visa: (t.ex. 100 eller 377)
+    `
   });
 
   //console.log('will render welcome text')
   screen.render();
 }).listen(port);
+
+function isValidNumber (pageNumber) {
+
+  if (isNaN(pageNumber)) {
+    return false;
+  }
+
+  if (pageNumber < 100 || pageNumber > 999) {
+    return false;
+  }
+
+  return true;
+
+}
 
 /**
  * cmd = string
@@ -90,11 +114,7 @@ function checkCommand (cmd, screen) {
 
   var pageNumber = parseInt(cmd, 10);
 
-  if (isNaN(pageNumber)) {
-    return false;
-  }
-
-  if (pageNumber < 100 || pageNumber > 999) {
+  if (!isValidNumber(pageNumber)) {
     return false;
   }
 
