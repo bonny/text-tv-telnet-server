@@ -12,6 +12,8 @@ telnet({ tty: true }, function(client) {
   let cmd = []
   let screen = null;
 
+  console.log('client connected')
+
   client.on('term', function(terminal) {
     screen.terminal = terminal;
     screen.render();
